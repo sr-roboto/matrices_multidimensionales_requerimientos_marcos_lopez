@@ -26,50 +26,52 @@ function ingresarPersona() {
 
 function mostrarTodosDatos(baseDatos) {
   if (baseDatos.length === 0) {
-    console.log('No hay datos para mostrar.');
+    alert('No hay datos para mostrar.');
     return;
   }
 
   // Mostrar la matriz completa
-  console.log('\nDatos almacenados:');
-  console.log(baseDatos);
+  alert('Datos almacenados:\n' + JSON.stringify(baseDatos, null, 2));
 
-  // Mostrar datos de manera más legible
-  console.log('\nDatos ingresados:');
+  // Construir mensaje legible para alert
+  let mensaje = 'Datos ingresados:\n';
   for (const persona of baseDatos) {
-    console.log(
-      `${persona[0]} ${persona[1]}, DNI: ${persona[2]}, Teléfonos: ${persona[3].length} teléfono(s), Hijos: ${persona[4].length}`
-    );
+    mensaje += `${persona[0]} ${persona[1]}, DNI: ${persona[2]}, Teléfonos: ${persona[3].length} teléfono(s), Hijos: ${persona[4].length}\n`;
   }
+  alert(mensaje);
 }
 
 function filtrarPorDNI(baseDatos) {
   const dniBuscar = prompt('Ingresa el DNI para filtrar: ');
 
   let encontrado = false;
+  let mensaje = '';
+
   for (const persona of baseDatos) {
     if (persona[2] === dniBuscar) {
-      console.log(`\nDatos de ${persona[0]} ${persona[1]}:`);
-      console.log(
-        `DNI: ${persona[2]}, Teléfonos: ${persona[3].length} teléfono(s), Hijos: ${persona[4].length}`
-      );
+      mensaje = `Datos de ${persona[0]} ${persona[1]}:\n`;
+      mensaje += `DNI: ${persona[2]}, Teléfonos: ${persona[3].length} teléfono(s), Hijos: ${persona[4].length}`;
       encontrado = true;
       break;
     }
   }
 
   if (!encontrado) {
-    console.log('No se encontró una persona con ese DNI.');
+    alert('No se encontró una persona con ese DNI.');
+  } else {
+    alert(mensaje);
   }
 }
 
 function mostrarMenu() {
-  console.log('\n--- Menú ---');
-  console.log('1. Ingresar nueva persona');
-  console.log('2. Mostrar todos los datos');
-  console.log('3. Filtrar por DNI');
-  console.log('4. Salir');
-  return prompt('Elige una opción: ');
+  const menuText =
+    '--- Menú ---\n' +
+    '1. Ingresar nueva persona\n' +
+    '2. Mostrar todos los datos\n' +
+    '3. Filtrar por DNI\n' +
+    '4. Salir';
+
+  return prompt(menuText + '\n\nElige una opción: ');
 }
 
 function main() {
@@ -81,16 +83,16 @@ function main() {
     if (opcion === '1') {
       const persona = ingresarPersona();
       baseDatos.push(persona);
-      console.log('¡Persona agregada correctamente!');
+      alert('¡Persona agregada correctamente!');
     } else if (opcion === '2') {
       mostrarTodosDatos(baseDatos);
     } else if (opcion === '3') {
       filtrarPorDNI(baseDatos);
     } else if (opcion === '4') {
-      console.log('Gracias por usar el programa. ¡Hasta pronto!');
+      alert('Gracias por usar el programa. ¡Hasta pronto!');
       break;
     } else {
-      console.log('Opción no válida. Por favor, intenta de nuevo.');
+      alert('Opción no válida. Por favor, intenta de nuevo.');
     }
   }
 }
